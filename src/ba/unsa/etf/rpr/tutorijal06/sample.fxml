@@ -79,20 +79,20 @@
         <Label fx:id="kontaktPodaciLabel"  GridPane.rowIndex="8" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity"  text="Kontakt podaci"/>
 
-        <Label fx:id="kontaktadresaLabel"  GridPane.rowIndex="9" GridPane.columnIndex="0"
+        <Label fx:id="kontaktAdresaLabel"  GridPane.rowIndex="9" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity"  text="Kontakt adresa:"/>
 
-        <TextField fx:id="kontaktadresaField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+        <TextField fx:id="kontaktAdresaField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
 
-        <Label fx:id="kontakttelefonLabel"  GridPane.rowIndex="10" GridPane.columnIndex="0"
+        <Label fx:id="kontaktTelefonLabel"  GridPane.rowIndex="10" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity"  text="Kontakt telefon:"/>
 
-        <TextField fx:id="kontakttelefonField" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+        <TextField fx:id="kontaktTelefonField" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
 
-        <Label fx:id="emailadresaLabel"  GridPane.rowIndex="11" GridPane.columnIndex="0"
+        <Label fx:id="emailAdresaLabel"  GridPane.rowIndex="11" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity"  text="Email adresa:"/>
 
-        <TextField fx:id="emailadresaField" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+        <TextField fx:id="emailAdresaField" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
 
         <Label fx:id="podaciOStudijuLabel"  GridPane.rowIndex="12" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity"  text="Podaci o studiju"/>

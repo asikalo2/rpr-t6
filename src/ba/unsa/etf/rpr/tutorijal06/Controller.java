@@ -16,11 +16,11 @@ public class Controller {
     public TextField jmbgField;
     public TextField datumrodjenjaField;
     public TextField mjestorodjenjaField;
-    public TextField kontaktadresaField;
-    public TextField kontakttelefonField;
-    public TextField emailadresaField;
+    public TextField kontaktAdresaField;
+    public TextField kontaktTelefonField;
+    public TextField emailAdresaField;
 
-    boolean validnoImePrezime(String n){
+    boolean validnost(String n){
         int duzina=0;
         int i=0;
         char c;
@@ -93,6 +93,7 @@ public class Controller {
                 return false;
             }
         }
+
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         format.setLenient(false);
@@ -110,7 +111,7 @@ public class Controller {
     imeField.textProperty().addListener(new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-            if (validnoImePrezime(n)) {
+            if (validnost(n)) {
                 imeField.getStyleClass().removeAll("poljeNijeIspravno");
                 imeField.getStyleClass().add("poljeIspravno");
             } else {
@@ -123,7 +124,7 @@ public class Controller {
     prezimeField.textProperty().addListener(new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-            if (validnoImePrezime(n)) {
+            if (validnost(n)) {
                 prezimeField.getStyleClass().removeAll("poljeNijeIspravno");
                 prezimeField.getStyleClass().add("poljeIspravno");
             } else {
@@ -133,16 +134,29 @@ public class Controller {
         }
     });
 
-    emailadresaField.textProperty().addListener(new ChangeListener<String>() {
+    emailAdresaField.textProperty().addListener(new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> obs, String o, String n) {
             EmailValidator validator = EmailValidator.getInstance();
             if (validator.isValid(n)) {
-                emailadresaField.getStyleClass().removeAll("poljeNijeIspravno");
-                emailadresaField.getStyleClass().add("poljeIspravno");
+                emailAdresaField.getStyleClass().removeAll("poljeNijeIspravno");
+                emailAdresaField.getStyleClass().add("poljeIspravno");
             } else {
-                emailadresaField.getStyleClass().removeAll("poljeIspravno");
-                emailadresaField.getStyleClass().add("poljeNijeIspravno");
+                emailAdresaField.getStyleClass().removeAll("poljeIspravno");
+                emailAdresaField.getStyleClass().add("poljeNijeIspravno");
+            }
+        }
+    });
+
+    kontaktAdresaField.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
+            if (validnost(n)) {
+                kontaktAdresaField.getStyleClass().removeAll("poljeNijeIspravno");
+                kontaktAdresaField.getStyleClass().add("poljeIspravno");
+            } else {
+                kontaktAdresaField.getStyleClass().removeAll("poljeIspravno");
+                kontaktAdresaField.getStyleClass().add("poljeNijeIspravno");
             }
         }
     });
