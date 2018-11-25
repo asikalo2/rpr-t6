@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<?import javafx.geometry.Insets?>
+<GridPane alignment="CENTER" vgap="5" hgap="5" fx:controller="ba.unsa.etf.rpr.tutorijal06.Controller"
+          xmlns="http://javafx.com/javafx/8.0.172-ea"
+          xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets top="5" right="5" bottom="5" left="5"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="25"/>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="25"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+        <RowConstraints percentHeight="16" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <children>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Ime"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Prezime"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Broj indeksa"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="JMBG"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Datum rođenja"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Mjesto rođenja"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Kontakt adresa"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Kontakt telefon"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="E-mail adresa"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Odsjek"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Godina studija"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Ciklus studija"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Redovan/redovan samofinansirajući"/>
+        <Label fx:id="display" style="-fx-background-color: red;" GridPane.columnSpan="4"
+               alignment="BASELINE_RIGHT" maxHeight="Infinity" maxWidth="Infinity"
+               text="Posebna kategorija"/>
+
+
+    </children>
+</GridPane>
