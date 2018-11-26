@@ -437,12 +437,16 @@ public class Controller {
                     Validator validator = Validator.combine(
                             Validator.createEmptyValidator("Datum rođenja ne može biti prazan!"),
                             Validator.createPredicateValidator((Predicate<LocalDate>) localDate -> {
-                                return ispravanDatum(localDate.toString());
+                                LocalDate ld = datumRodjenjaField.getValue();
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                                String strDate = ld.format(formatter);
+                                return ispravanDatum(strDate);
                             }, "Neispravan datum!"),
                             Validator.createPredicateValidator((Predicate<LocalDate>) localDate -> {
                                 return validirajJmbgDatum(jmbgField.getText(), datumRodjenjaField.getValue());
                             }, "JMBG i datum rođenja ne odgoaraju!")
                     );
+                    validation.registerValidator(datumRodjenjaField, true, validator);
                 } else {
                     // Hack sa controlsFX bitbucketa (u sustini registrira prazan validator ako komponenta nije
                     // fokusirana
