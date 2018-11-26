@@ -270,7 +270,7 @@ public class Controller {
         emailAdresaField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-                if (!imeField.isFocused()) {
+                if (!emailAdresaField.isFocused()) {
                     //Kombinacija empty string validatora i
                     // predicate validatora koji poziva metodu validnost
                     Validator validator = Validator.combine(
