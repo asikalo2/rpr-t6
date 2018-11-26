@@ -1,7 +1,7 @@
-
 .poljeIspravno {
+    -fx-control-inner-background: greenyellow;
 }
 
 .poljeNijeIspravno {
-    -fx-background-color: red;
+    -fx-control-inner-background: lightpink;
 }

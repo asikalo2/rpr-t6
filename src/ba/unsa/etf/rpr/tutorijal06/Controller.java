@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import org.apache.commons.validator.routines.EmailValidator;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -31,11 +33,13 @@ public class Controller {
     public SimpleStringProperty imeProperty;
     public SimpleStringProperty prezimeProperty;
     public SimpleStringProperty jmbgProperty;
+    public SimpleStringProperty emailAdresaProperty;
 
     public Controller() {
         imeProperty = new SimpleStringProperty("");
         prezimeProperty = new SimpleStringProperty("");
         jmbgProperty = new SimpleStringProperty("");
+        emailAdresaProperty = new SimpleStringProperty("");
 
     }
 
@@ -44,6 +48,7 @@ public class Controller {
         imeField.textProperty().bindBidirectional(imeProperty);
         prezimeField.textProperty().bindBidirectional(prezimeProperty);
         jmbgField.textProperty().bindBidirectional(jmbgProperty);
+        emailAdresaField.textProperty().bindBidirectional(emailAdresaProperty);
         dodajListenere();
     }
 
@@ -139,46 +144,37 @@ public class Controller {
             }
         });
         //Listener za prezimeField
-        prezimeField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (validnost(n)) {
-                    prezimeField.getStyleClass().removeAll("poljeNijeIspravno");
-                    prezimeField.getStyleClass().add("poljeIspravno");
-                } else {
-                    prezimeField.getStyleClass().removeAll("poljeIspravno");
-                    prezimeField.getStyleClass().add("poljeNijeIspravno");
-                }
+        prezimeField.textProperty().addListener((observableValue, o, n) -> {
+            if (validnost(n)) {
+                prezimeField.getStyleClass().removeAll("poljeNijeIspravno");
+                prezimeField.getStyleClass().add("poljeIspravno");
+            } else {
+                prezimeField.getStyleClass().removeAll("poljeIspravno");
+                prezimeField.getStyleClass().add("poljeNijeIspravno");
             }
         });
-
-        emailAdresaField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> obs, String o, String n) {
-                /*EmailValidator validator = EmailValidator.getInstance();
-                if (validator.isValid(n)) {
-                    emailAdresaField.getStyleClass().removeAll("poljeNijeIspravno");
-                    emailAdresaField.getStyleClass().add("poljeIspravno");
-                } else {
-                    emailAdresaField.getStyleClass().removeAll("poljeIspravno");
-                    emailAdresaField.getStyleClass().add("poljeNijeIspravno");
-                }*/
+        // Listener za email adresu
+        emailAdresaField.textProperty().addListener((obs, o, n) -> {
+            EmailValidator validator = EmailValidator.getInstance();
+            if (validator.isValid(n)) {
+                emailAdresaField.getStyleClass().removeAll("poljeNijeIspravno");
+                emailAdresaField.getStyleClass().add("poljeIspravno");
+            } else {
+                emailAdresaField.getStyleClass().removeAll("poljeIspravno");
+                emailAdresaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
-
-        kontaktAdresaField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (validnost(n)) {
-                    kontaktAdresaField.getStyleClass().removeAll("poljeNijeIspravno");
-                    kontaktAdresaField.getStyleClass().add("poljeIspravno");
-                } else {
-                    kontaktAdresaField.getStyleClass().removeAll("poljeIspravno");
-                    kontaktAdresaField.getStyleClass().add("poljeNijeIspravno");
-                }
+        // Listener za kontakt adresu
+        kontaktAdresaField.textProperty().addListener((observableValue, o, n) -> {
+            if (validnost(n)) {
+                kontaktAdresaField.getStyleClass().removeAll("poljeNijeIspravno");
+                kontaktAdresaField.getStyleClass().add("poljeIspravno");
+            } else {
+                kontaktAdresaField.getStyleClass().removeAll("poljeIspravno");
+                kontaktAdresaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
-
+        // Listener za broj indexa
         brojindeksaField.textProperty().addListener((observableValue, s, t1) -> {
             if (ispravanIndeks(t1)) {
                 brojindeksaField.getStyleClass().removeAll("poljeNijeIspravno");
@@ -188,7 +184,7 @@ public class Controller {
                 brojindeksaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
-
+        // Listener za datum rodjenja
         datumrodjenjaField.textProperty().addListener((observableValue, s, t1) -> {
             if (ispravanDatum(t1)) {
                 datumrodjenjaField.getStyleClass().removeAll("poljeNijeIspravno");
@@ -197,9 +193,8 @@ public class Controller {
                 datumrodjenjaField.getStyleClass().removeAll("poljeIspravno");
                 datumrodjenjaField.getStyleClass().add("poljeNijeIspravno");
             }
-
         });
-
+        // Listener za JMBG
         jmbgField.textProperty().addListener((observableValue, s, t1) -> {
             if (ispravanJMBG(t1)) {
                 jmbgField.getStyleClass().removeAll("poljeNijeIspravno");
@@ -208,7 +203,6 @@ public class Controller {
                 jmbgField.getStyleClass().removeAll("poljeIspravno");
                 jmbgField.getStyleClass().add("poljeNijeIspravno");
             }
-
         });
 
 
