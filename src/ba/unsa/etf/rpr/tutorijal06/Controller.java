@@ -275,7 +275,9 @@ public class Controller {
                     // predicate validatora koji poziva metodu validnost
                     Validator validator = Validator.combine(
                             Validator.createEmptyValidator("Email adresa ne može biti prazna!"),
-                            Validator.createPredicateValidator((Predicate<String>) s -> validnost(s),
+                            Validator.createPredicateValidator((Predicate<String>) email -> {
+                                EmailValidator emailValidator = EmailValidator.getInstance();
+                                return emailValidator.isValid(email);},
                                     "Neispravna email adresa!")
                     );
                     validation.registerValidator(emailAdresaField, validator);
