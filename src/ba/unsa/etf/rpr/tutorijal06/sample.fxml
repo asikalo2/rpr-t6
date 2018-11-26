@@ -73,7 +73,8 @@
                 <Label fx:id="datumRodjenjaLabel" GridPane.rowIndex="2" GridPane.columnIndex="0"
                        maxHeight="Infinity" maxWidth="Infinity" text="Datum rodjenja:"/>
 
-                <DatePicker fx:id="datumRodjenjaField" GridPane.rowIndex="2" GridPane.columnIndex="1" maxWidth="Infinity"/>
+                <DatePicker fx:id="datumRodjenjaField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                            maxWidth="Infinity"/>
 
                 <Label fx:id="mjestoRodjenjaFieldLabel" GridPane.rowIndex="3" GridPane.columnIndex="0"
                        maxHeight="Infinity" maxWidth="Infinity" text="Mjesto rodjenja:"/>

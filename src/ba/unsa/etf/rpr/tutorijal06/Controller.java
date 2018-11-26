@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationResult;
@@ -16,6 +17,8 @@ import sun.java2d.pipe.SpanShapeRenderer;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,19 +62,44 @@ public class Controller {
         prezimeField.textProperty().bindBidirectional(prezimeProperty);
         jmbgField.textProperty().bindBidirectional(jmbgProperty);
         emailAdresaField.textProperty().bindBidirectional(emailAdresaProperty);
+        datumRodjenjaField.setConverter(new StringConverter<LocalDate>() {
+            String pattern = "dd/MM/yyyy";
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+            {
+                datumRodjenjaField.setPromptText(pattern.toLowerCase());
+            }
+
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return dateFormatter.format(date);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
         dodajListenere();
     }
 
     private boolean validnost(String n) {
-        int duzina = 0;
         int i = 0;
         char c;
 
-        duzina = n.length();
+        if (n == null) return false;
 
-        if (duzina > 20 || duzina <= 0) return false;
+        if (n.length() > 20 || n.length() <= 0) return false;
 
-        for (i = 0; i < duzina; i++)  //Check for `Firstname`
+        for (i = 0; i < n.length(); i++)  //Check for `Firstname`
         {
             c = n.charAt(i);
             if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && c != ' ') {
@@ -135,7 +163,6 @@ public class Controller {
 
     boolean ispravanDatum(String s) {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
         format.setLenient(false);
 
         try {
@@ -355,7 +382,7 @@ public class Controller {
                     // predicate validatora koji poziva metodu validnost
                     Validator validator = Validator.combine(
                             Validator.createEmptyValidator("Mjesto rođenja ne može biti prazno!"),
-                            Validator.createPredicateValidator((Predicate<String>) s -> validnost(s),
+                            Validator.createPredicateValidator((Predicate<String>) s -> validnost(mjestoRodjenjaField.getValue()),
                                     "Neispravno mjesto rođenja!")
                     );
                     validation.registerValidator(mjestoRodjenjaField, validator);
@@ -385,12 +412,16 @@ public class Controller {
                 if (!datumRodjenjaField.isFocused()) {
                     //Kombinacija empty string validatora i
                     // predicate validatora koji poziva metodu validnost
-                    Validator validator = Validator.createEmptyValidator("Datum rođenja ne može biti prazan!");
-                    validation.registerValidator(datumRodjenjaField, validator);
+                    Validator validator = Validator.combine(
+                            Validator.createEmptyValidator("Datum rođenja ne može biti prazan!"),
+                            Validator.createPredicateValidator((Predicate<LocalDate>) localDate -> {
+                                return ispravanDatum(localDate.toString());
+                            }, "Neispravan datum!")
+                    );
                 } else {
                     // Hack sa controlsFX bitbucketa (u sustini registrira prazan validator ako komponenta nije
                     // fokusirana
-                    validation.registerValidator(datumRodjenjaField, false, (Control c, String s) ->
+                    validation.registerValidator(datumRodjenjaField, false, (Control c, LocalDate s) ->
                             ValidationResult.fromErrorIf(c, "", false));
                 }
             }
