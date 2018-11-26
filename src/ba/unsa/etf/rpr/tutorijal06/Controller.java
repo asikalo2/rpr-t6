@@ -62,7 +62,7 @@ public class Controller {
         dodajListenere();
     }
 
-    boolean validnost(String n) {
+    private boolean validnost(String n) {
         int duzina = 0;
         int i = 0;
         char c;
@@ -153,10 +153,25 @@ public class Controller {
             }
         });
 
-        imeField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            Validator<String> validator = (control, s) -> ValidationResult.fromMessageIf(control,
-                    "Ime nije ispravno!", Severity.ERROR, !validnost(s));
-            validation.registerValidator(imeField, Validator.createEmptyValidator("ime ne moze biti prazno!");
+        imeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                if (!imeField.isFocused()) {
+                    //Kombinacija empty string validatora i
+                    // predicate validatora koji poziva metodu validnost
+                    Validator validator = Validator.combine(
+                            Validator.createEmptyValidator("Ime ne može biti prazno!"),
+                            Validator.createPredicateValidator((Predicate<String>) s -> validnost(s),
+                                    "Neispravno ime!")
+                    );
+                    validation.registerValidator(imeField, validator);
+                } else {
+                    // Hack sa controlsFX bitbucketa (u sustini registrira prazan validator ako komponenta nije
+                    // fokusirana
+                    validation.registerValidator(imeField, false, (Control c, String s) ->
+                            ValidationResult.fromErrorIf(c, "", false));
+                }
+            }
         });
 
         //Listener za prezimeField
@@ -169,6 +184,27 @@ public class Controller {
                 prezimeField.getStyleClass().add("poljeNijeIspravno");
             }
         });
+        prezimeField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+                if (!prezimeField.isFocused()) {
+                    //Kombinacija empty string validatora i
+                    // predicate validatora koji poziva metodu validnost
+                    Validator validator = Validator.combine(
+                            Validator.createEmptyValidator("Prezime ne može biti prazno!"),
+                            Validator.createPredicateValidator((Predicate<String>) s -> validnost(s),
+                                    "Neispravno prezime!")
+                    );
+                    validation.registerValidator(prezimeField, validator);
+                } else {
+                    // Hack sa controlsFX bitbucketa (u sustini registrira prazan validator ako komponenta nije
+                    // fokusirana
+                    validation.registerValidator(prezimeField, false, (Control c, String s) ->
+                            ValidationResult.fromErrorIf(c, "", false));
+                }
+            }
+        });
+
         // Listener za email adresu
         emailAdresaField.textProperty().addListener((obs, o, n) -> {
             EmailValidator validator = EmailValidator.getInstance();
@@ -213,6 +249,7 @@ public class Controller {
                 brojindeksaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
+
 
         // Listener za mjesto rodjenja
         mjestoRodjenjaField.getEditor().textProperty().addListener((observableValue, o, n) -> {
