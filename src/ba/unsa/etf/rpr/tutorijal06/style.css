@@ -5,3 +5,7 @@
 .poljeNijeIspravno {
     -fx-control-inner-background: lightpink;
 }
+
+.naslovGrupe {
+    -fx-font-weight: bold;
+}

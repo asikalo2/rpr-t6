@@ -9,16 +9,18 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <?import java.net.URL?>
-<GridPane alignment="CENTER" vgap="10" hgap="10" fx:controller="ba.unsa.etf.rpr.tutorijal06.Controller"
+<GridPane alignment="CENTER" vgap="4" hgap="4" fx:controller="ba.unsa.etf.rpr.tutorijal06.Controller"
           xmlns="http://javafx.com/javafx/8.0.172-ea"
           xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@style.css" />
+        <URL value="@style.css"/>
     </stylesheets>
     <padding>
         <Insets top="5" right="5" bottom="5" left="5"/>
     </padding>
     <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
+        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" percentWidth="50"/>
     </columnConstraints>
@@ -45,7 +47,7 @@
     <children>
 
         <Label fx:id="odnovniPodaciLabel" GridPane.rowIndex="0" GridPane.columnIndex="0"
-               maxHeight="Infinity" maxWidth="Infinity" text="Osnovni podaci"/>
+               maxHeight="Infinity" maxWidth="Infinity" text="Osnovni podaci" styleClass="naslovGrupe"/>
 
         <Label fx:id="imeLabel" GridPane.rowIndex="1" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity" text="Ime:"/>
@@ -62,49 +64,61 @@
 
         <TextField fx:id="brojindeksaField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
-        <Label fx:id="detaljniLicniPodaciLabel" GridPane.rowIndex="4" GridPane.columnIndex="0"
-               maxHeight="Infinity" maxWidth="Infinity" text="Detaljni lični podaci"/>
+        <Label fx:id="detaljniLicniPodaciLabel" GridPane.rowIndex="0" GridPane.columnIndex="2"
+               maxHeight="Infinity" maxWidth="Infinity" text="Detaljni lični podaci" styleClass="naslovGrupe"/>
 
-        <Label fx:id="jmbgLabel" GridPane.rowIndex="5" GridPane.columnIndex="0"
+        <Label fx:id="jmbgLabel" GridPane.rowIndex="1" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="JMBG:"/>
 
-        <TextField fx:id="jmbgField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+        <TextField fx:id="jmbgField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
-        <Label fx:id="datumrodjenjaLabel" GridPane.rowIndex="6" GridPane.columnIndex="0"
+        <Label fx:id="datumRodjenjaLabel" GridPane.rowIndex="2" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Datum rodjenja:"/>
 
-        <TextField fx:id="datumrodjenjaField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+        <DatePicker fx:id="datumRodjenjaField" GridPane.rowIndex="2" GridPane.columnIndex="3" maxWidth="Infinity"/>
 
-        <Label fx:id="mjestorodjenjaLabel" GridPane.rowIndex="7" GridPane.columnIndex="0"
+        <Label fx:id="mjestoRodjenjaFieldLabel" GridPane.rowIndex="3" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Mjesto rodjenja:"/>
 
-        <TextField fx:id="mjestorodjenjaField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+        <!--<TextField fx:id="mjestoRodjenjaField" GridPane.rowIndex="3" GridPane.columnIndex="3"/>-->
+        <ComboBox fx:id="mjestoRodjenjaField" GridPane.rowIndex="3" GridPane.columnIndex="3" editable="true">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Sarajevo"/>
+                    <String fx:value="Mostar"/>
+                    <String fx:value="Banja Luka"/>
+                    <String fx:value="Tuzla"/>
+                    <String fx:value="Bihać"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
 
-        <Label fx:id="kontaktPodaciLabel" GridPane.rowIndex="8" GridPane.columnIndex="0"
-               maxHeight="Infinity" maxWidth="Infinity" text="Kontakt podaci"/>
 
-        <Label fx:id="kontaktAdresaLabel" GridPane.rowIndex="9" GridPane.columnIndex="0"
+        <Label fx:id="kontaktPodaciLabel" GridPane.rowIndex="6" GridPane.columnIndex="0"
+               maxHeight="Infinity" maxWidth="Infinity" text="Kontakt podaci" styleClass="naslovGrupe"/>
+
+        <Label fx:id="kontaktAdresaLabel" GridPane.rowIndex="7" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity" text="Kontakt adresa:"/>
 
-        <TextField fx:id="kontaktAdresaField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+        <TextField fx:id="kontaktAdresaField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
 
-        <Label fx:id="kontaktTelefonLabel" GridPane.rowIndex="10" GridPane.columnIndex="0"
+        <Label fx:id="kontaktTelefonLabel" GridPane.rowIndex="8" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity" text="Kontakt telefon:"/>
 
-        <TextField fx:id="kontaktTelefonField" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+        <TextField fx:id="kontaktTelefonField" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 
-        <Label fx:id="emailAdresaLabel" GridPane.rowIndex="11" GridPane.columnIndex="0"
+        <Label fx:id="emailAdresaLabel" GridPane.rowIndex="9" GridPane.columnIndex="0"
                maxHeight="Infinity" maxWidth="Infinity" text="Email adresa:"/>
 
-        <TextField fx:id="emailAdresaField" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+        <TextField fx:id="emailAdresaField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
 
-        <Label fx:id="podaciOStudijuLabel" GridPane.rowIndex="12" GridPane.columnIndex="0"
-               maxHeight="Infinity" maxWidth="Infinity" text="Podaci o studiju"/>
+        <Label fx:id="podaciOStudijuLabel" GridPane.rowIndex="6" GridPane.columnIndex="2"
+               maxHeight="Infinity" maxWidth="Infinity" text="Podaci o studiju" styleClass="naslovGrupe"/>
 
-        <Label fx:id="odsjekLabel" GridPane.rowIndex="13" GridPane.columnIndex="0"
+        <Label fx:id="odsjekLabel" GridPane.rowIndex="7" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Odsjek:"/>
 
-        <ComboBox fx:id="odsjekField" GridPane.rowIndex="13" GridPane.columnIndex="1" maxWidth="Infinity">
+        <ComboBox fx:id="odsjekField" GridPane.rowIndex="7" GridPane.columnIndex="3" maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Automatika i elektronika"/>
@@ -115,10 +129,10 @@
             </items>
         </ComboBox>
 
-        <Label fx:id="godinaStudijaLabel" GridPane.rowIndex="14" GridPane.columnIndex="0"
+        <Label fx:id="godinaStudijaLabel" GridPane.rowIndex="8" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Godina studija:"/>
 
-        <ComboBox fx:id="godinaStudijaField" GridPane.rowIndex="14" GridPane.columnIndex="1" maxWidth="Infinity">
+        <ComboBox fx:id="godinaStudijaField" GridPane.rowIndex="8" GridPane.columnIndex="3" maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Prva godina"/>
@@ -128,10 +142,10 @@
             </items>
         </ComboBox>
 
-        <Label fx:id="ciklusstudijaLabel" GridPane.rowIndex="15" GridPane.columnIndex="0"
+        <Label fx:id="ciklusstudijaLabel" GridPane.rowIndex="9" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Ciklus studija:"/>
 
-        <ComboBox fx:id="ciklusStudijaField" GridPane.rowIndex="15" GridPane.columnIndex="1" maxWidth="Infinity">
+        <ComboBox fx:id="ciklusStudijaField" GridPane.rowIndex="9" GridPane.columnIndex="3" maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="I ciklus"/>
@@ -141,10 +155,10 @@
             </items>
         </ComboBox>
 
-        <Label fx:id="redovanSamofinansirajuciLabel" GridPane.rowIndex="16" GridPane.columnIndex="0"
+        <Label fx:id="redovanSamofinansirajuciLabel" GridPane.rowIndex="10" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Status studenta:"/>
 
-        <ComboBox fx:id="redovanSamofinansirajuciField" GridPane.rowIndex="16" GridPane.columnIndex="1"
+        <ComboBox fx:id="redovanSamofinansirajuciField" GridPane.rowIndex="10" GridPane.columnIndex="3"
                   maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -154,10 +168,10 @@
             </items>
         </ComboBox>
 
-        <Label fx:id="posebnaKategorijaLabel" GridPane.rowIndex="17" GridPane.columnIndex="0"
+        <Label fx:id="posebnaKategorijaLabel" GridPane.rowIndex="11" GridPane.columnIndex="2"
                maxHeight="Infinity" maxWidth="Infinity" text="Da li student pripada boračkim kategorijama:"/>
 
-        <ComboBox fx:id="posebnaKategorijaField" GridPane.rowIndex="17" GridPane.columnIndex="1" maxWidth="Infinity">
+        <ComboBox fx:id="posebnaKategorijaField" GridPane.rowIndex="11" GridPane.columnIndex="3" maxWidth="Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Da"/>

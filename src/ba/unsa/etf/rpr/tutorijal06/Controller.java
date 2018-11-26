@@ -5,9 +5,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.DateFormat;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 public class Controller {
@@ -24,8 +28,8 @@ public class Controller {
     public TextField prezimeField;
     public TextField brojindeksaField;
     public TextField jmbgField;
-    public TextField datumrodjenjaField;
-    public TextField mjestorodjenjaField;
+    public DatePicker datumRodjenjaField;
+    public ComboBox<String> mjestoRodjenjaField;
     public TextField kontaktAdresaField;
     public TextField kontaktTelefonField;
     public TextField emailAdresaField;
@@ -35,11 +39,17 @@ public class Controller {
     public SimpleStringProperty jmbgProperty;
     public SimpleStringProperty emailAdresaProperty;
 
+
+    public ValidationSupport validation;
+
     public Controller() {
         imeProperty = new SimpleStringProperty("");
         prezimeProperty = new SimpleStringProperty("");
         jmbgProperty = new SimpleStringProperty("");
         emailAdresaProperty = new SimpleStringProperty("");
+
+        validation = new ValidationSupport();
+        //validation.registerValidator(imeField, Validator.createEmptyValidator("Ime ne moze biti prazno!"));
 
     }
 
@@ -77,13 +87,11 @@ public class Controller {
         else return true;
     }
 
-    private static boolean cifraCheck(String broj)
-    {
+    private static boolean cifraCheck(String broj) {
         boolean validno = false;
 
         char[] charovi = broj.toCharArray();
-        for (int i = 0; i < charovi.length; i++)
-        {
+        for (int i = 0; i < charovi.length; i++) {
             validno = false;
             if (((charovi[i] >= '0') && (charovi[i] <= '9')))
                 validno = true;
@@ -91,30 +99,31 @@ public class Controller {
         return validno;
     }
 
+    boolean ispravanBroj(String n) {
+        if ((n.length() != 9 || n.length() != 10) || n.charAt(0) != 0) return false;
+
+        return true;
+    }
+
     boolean ispravanJMBG(String s) {
         // Nadjedno na netu
         List<Integer> lista = new ArrayList<Integer>();
-        if(cifraCheck(s))
-        {
-            for(char ch : s.toCharArray())
-            {
-                lista.add( Integer.valueOf(String.valueOf(ch)));
+        if (cifraCheck(s)) {
+            for (char ch : s.toCharArray()) {
+                lista.add(Integer.valueOf(String.valueOf(ch)));
             }
 
-            if (lista.size()!= 13)
+            if (lista.size() != 13)
                 return false;
 
-            else
-            {
+            else {
                 double eval = 0.0;
-                for (int i = 0; i < 6; i++)
-                {
+                for (int i = 0; i < 6; i++) {
                     eval += (7 - i) * (lista.get(i) + lista.get(i + 6));
                 }
                 return lista.get(12) == 11 - eval % 11;
             }
-        }
-        else return false;
+        } else return false;
     }
 
 
@@ -143,6 +152,13 @@ public class Controller {
                 imeField.getStyleClass().add("poljeNijeIspravno");
             }
         });
+
+        imeField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            Validator<String> validator = (control, s) -> ValidationResult.fromMessageIf(control,
+                    "Ime nije ispravno!", Severity.ERROR, !validnost(s));
+            validation.registerValidator(imeField, Validator.createEmptyValidator("ime ne moze biti prazno!");
+        });
+
         //Listener za prezimeField
         prezimeField.textProperty().addListener((observableValue, o, n) -> {
             if (validnost(n)) {
@@ -174,6 +190,19 @@ public class Controller {
                 kontaktAdresaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
+
+        // Listener za kontakt adresu
+        kontaktTelefonField.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravanBroj(n)) {
+                kontaktTelefonField.getStyleClass().removeAll("poljeNijeIspravno");
+                kontaktTelefonField.getStyleClass().add("poljeIspravno");
+            } else {
+                kontaktTelefonField.getStyleClass().removeAll("poljeIspravno");
+                kontaktTelefonField.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+
         // Listener za broj indexa
         brojindeksaField.textProperty().addListener((observableValue, s, t1) -> {
             if (ispravanIndeks(t1)) {
@@ -184,14 +213,26 @@ public class Controller {
                 brojindeksaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
-        // Listener za datum rodjenja
-        datumrodjenjaField.textProperty().addListener((observableValue, s, t1) -> {
-            if (ispravanDatum(t1)) {
-                datumrodjenjaField.getStyleClass().removeAll("poljeNijeIspravno");
-                datumrodjenjaField.getStyleClass().add("poljeIspravno");
+
+        // Listener za mjesto rodjenja
+        mjestoRodjenjaField.getEditor().textProperty().addListener((observableValue, o, n) -> {
+            if (validnost(n)) {
+                mjestoRodjenjaField.getStyleClass().removeAll("poljeNijeIspravno");
+                mjestoRodjenjaField.getStyleClass().add("poljeIspravno");
             } else {
-                datumrodjenjaField.getStyleClass().removeAll("poljeIspravno");
-                datumrodjenjaField.getStyleClass().add("poljeNijeIspravno");
+                mjestoRodjenjaField.getStyleClass().removeAll("poljeIspravno");
+                mjestoRodjenjaField.getStyleClass().add("poljeNijeIspravno");
+            }
+        });
+
+        // Listener za datum rodjenja
+        datumRodjenjaField.getEditor().textProperty().addListener((observableValue, s, t1) -> {
+            if (ispravanDatum(t1)) {
+                datumRodjenjaField.getStyleClass().removeAll("poljeNijeIspravno");
+                datumRodjenjaField.getStyleClass().add("poljeIspravno");
+            } else {
+                datumRodjenjaField.getStyleClass().removeAll("poljeIspravno");
+                datumRodjenjaField.getStyleClass().add("poljeNijeIspravno");
             }
         });
         // Listener za JMBG
@@ -204,7 +245,5 @@ public class Controller {
                 jmbgField.getStyleClass().add("poljeNijeIspravno");
             }
         });
-
-
     }
 }
