@@ -13,7 +13,6 @@ import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -102,9 +101,13 @@ public class Controller {
         int i = 0;
         char c;
 
-        if (n == null) return false;
+        if (n == null) {
+            return false;
+        }
 
-        if (n.length() > 20 || n.length() <= 0) return false;
+        if (n.length() > 20 || n.length() <= 0) {
+            return false;
+        }
 
         for (i = 0; i < n.length(); i++)  //Check for `Firstname`
         {
@@ -117,21 +120,22 @@ public class Controller {
     }
 
     private boolean validnost2(String n) {
-        int i = 0;
-        char c;
+        if (n == null) {
+            return false;
+        }
 
-        if (n == null) return false;
-
-        if (n.length() > 20 || n.length() <= 0) return false;
-
-
+        if (n.length() > 20 || n.length() <= 0) {
+            return false;
+        }
         return true;
     }
 
     private boolean ispravanIndeks(String s) {
-        if (s.length() != 5 && s.length() > 0 && s.charAt(0) != 1)
+        if (s.length() != 5 && s.length() > 0 && s.charAt(0) != 1) {
             return false;
-        else return true;
+        } else {
+            return true;
+        }
     }
 
     private static boolean cifraCheck(String broj) {
@@ -140,8 +144,9 @@ public class Controller {
         char[] charovi = broj.toCharArray();
         for (int i = 0; i < charovi.length; i++) {
             validno = false;
-            if (((charovi[i] >= '0') && (charovi[i] <= '9')))
+            if (((charovi[i] >= '0') && (charovi[i] <= '9'))) {
                 validno = true;
+            }
         }
         return validno;
     }
@@ -149,10 +154,14 @@ public class Controller {
     private boolean ispravanBroj(String n) {
         int i = 0;
 
-        if (n.length() < 9 || n.length() > 10 || n.charAt(0) != '0') return false;
+        if (n.length() < 9 || n.length() > 10 || n.charAt(0) != '0') {
+            return false;
+        }
 
         for (i = 0; i < n.length(); i++) {
-            if (!(n.charAt(i) >= '0' && n.charAt(i) <= '9')) return false;
+            if (!(n.charAt(i) >= '0' && n.charAt(i) <= '9')) {
+                return false;
+            }
         }
 
         return true;
@@ -166,17 +175,18 @@ public class Controller {
                 lista.add(Integer.valueOf(String.valueOf(ch)));
             }
 
-            if (lista.size() != 13)
+            if (lista.size() != 13) {
                 return false;
-
-            else {
-                double eval = 0.0;
+            } else {
+                int eval = 0;
                 for (int i = 0; i < 6; i++) {
                     eval += (7 - i) * (lista.get(i) + lista.get(i + 6));
                 }
                 return lista.get(12) == 11 - eval % 11;
             }
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
 
@@ -628,9 +638,13 @@ public class Controller {
             }
         });
     }
+
     public void potvrdiBtnAction(ActionEvent actionEvent) {
 
-        if (!validation.isInvalid() && !imeField.getText().equals("")) {
+        if (!validation.isInvalid() && !imeField.getText().equals("") && datumRodjenjaField.getValue() != null &&
+                odsjekField.getValue() != null && godinaStudijaField.getValue() != null &&
+                ciklusStudijaField.getValue() != null && redovanSamofinansirajuciField.getValue() != null &&
+                posebnaKategorijaField.getValue() != null) {
 
             System.out.println("Ime i prezime: " + imeField.getText() + ' ' + prezimeField.getText() + '\n' +
                     "Broj indeksa: " + brojindeksaField.getText() + '\n' +
@@ -648,8 +662,7 @@ public class Controller {
 
             Stage stage = (Stage) potvrdiBtn.getScene().getWindow();
             stage.close();
-        }
-        else {
+        } else {
             Alert alertBox = new Alert(Alert.AlertType.ERROR);
             alertBox.setTitle("Greška");
             alertBox.setContentText("Polja forme nisu ispravna!");
