@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.controlsfx.validation.Severity;
@@ -49,6 +50,7 @@ public class Controller {
     public ComboBox ciklusStudijaField;
     public ComboBox redovanSamofinansirajuciField;
     public ComboBox posebnaKategorijaField;
+    public Button potvrdiBtn;
 
     public Controller() {
         imeProperty = new SimpleStringProperty("");
@@ -624,7 +626,7 @@ public class Controller {
     }
     public void potvrdiBtnAction(ActionEvent actionEvent) {
 
-        if (!validation.isInvalid()) {
+        if (!validation.isInvalid() && !imeField.getText().equals("")) {
 
             System.out.println("Ime i prezime: " + imeField.getText() + ' ' + prezimeField.getText() + '\n' +
                     "Broj indeksa: " + brojindeksaField.getText() + '\n' +
@@ -639,6 +641,15 @@ public class Controller {
                     "Godina studija: " + godinaStudijaField.getValue() + '\n' +
                     "Status studenta: " + redovanSamofinansirajuciField.getValue() + '\n' +
                     "Poseban status studenta: " + posebnaKategorijaField.getValue() + '\n');
+
+            Stage stage = (Stage) potvrdiBtn.getScene().getWindow();
+            stage.close();
+        }
+        else {
+            Alert alertBox = new Alert(Alert.AlertType.ERROR);
+            alertBox.setTitle("Greška");
+            alertBox.setContentText("Polja forme nisu ispravna!");
+            alertBox.showAndWait();
         }
     }
 
