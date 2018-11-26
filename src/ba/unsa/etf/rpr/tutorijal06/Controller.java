@@ -44,6 +44,11 @@ public class Controller {
 
 
     public ValidationSupport validation;
+    public ComboBox odsjekField;
+    public ComboBox godinaStudijaField;
+    public ComboBox ciklusStudijaField;
+    public ComboBox redovanSamofinansirajuciField;
+    public ComboBox posebnaKategorijaField;
 
     public Controller() {
         imeProperty = new SimpleStringProperty("");
@@ -106,6 +111,18 @@ public class Controller {
                 return false;
             }
         }
+        return true;
+    }
+
+    private boolean validnost2(String n) {
+        int i = 0;
+        char c;
+
+        if (n == null) return false;
+
+        if (n.length() > 20 || n.length() <= 0) return false;
+
+
         return true;
     }
 
@@ -288,7 +305,7 @@ public class Controller {
                 if (!kontaktAdresaField.isFocused()) {
                     //Kombinacija empty string validatora i
                     // predicate validatora koji poziva metodu validnost
-                    Validator validator = Validator.createPredicateValidator((Predicate<String>) s -> validnost(s),
+                    Validator validator = Validator.createPredicateValidator((Predicate<String>) s -> validnost2(s),
                             "Neispravna kontakt adresa!");
                     validation.registerValidator(kontaktAdresaField, validator);
                 } else {
@@ -458,5 +475,26 @@ public class Controller {
                 }
             }
         });
+
+        //potvrdiBtn
+
     }
+
+    public void potvrdiBtnAction(ActionEvent actionEvent) {
+            System.out.println("Ime i prezime: " + imeField.getText() + ' ' + prezimeField.getText() + '\n' +
+                    "Broj indeksa: " + brojindeksaField.getText() + '\n' +
+                    "JMBG: " + jmbgField.getText() + '\n' +
+                    "Datum rođenja: " + datumRodjenjaField.getValue() + '\n' +
+                    "Mjesto rođenja: " + mjestoRodjenjaField.getValue() + '\n' +
+                    "Kontakt adresa: " + kontaktAdresaField.getText() + '\n' +
+                    "Kontakt telefon: " + kontaktTelefonField.getText() + '\n' +
+                    "Email adresa: " + emailAdresaField.getText() + '\n' +
+                    "Odsjek: " + odsjekField.getValue() + '\n' +
+                    "Ciklus studija: " + ciklusStudijaField.getValue() + '\n' +
+                    "Godina studija: " + godinaStudijaField.getValue() + '\n' +
+                    "Status studenta: " + redovanSamofinansirajuciField.getValue() + '\n' +
+                    "Poseban status studenta: " + posebnaKategorijaField.getValue() + '\n');
+        }
+
+
 }

@@ -198,7 +198,8 @@
             </children>
         </GridPane>
 
-        <Button fx:id="potvrdiBtn" text="Potvrdi" GridPane.rowIndex="2" GridPane.columnSpan="2" maxWidth="Infinity"/>
+        <Button fx:id="potvrdiBtn" onAction="#potvrdiBtnAction" alignment="CENTER" text="Potvrdi"
+                GridPane.rowIndex="2" GridPane.columnSpan="2" maxWidth="Infinity"/>
 
     </children>
 </GridPane>
