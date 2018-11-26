@@ -126,7 +126,7 @@ public class Controller {
         return true;
     }
 
-    boolean ispravanIndeks(String s) {
+    private boolean ispravanIndeks(String s) {
         if (s.length() != 5 && s.length() > 0 && s.charAt(0) != 1)
             return false;
         else return true;
@@ -144,7 +144,7 @@ public class Controller {
         return validno;
     }
 
-    boolean ispravanBroj(String n) {
+    private boolean ispravanBroj(String n) {
         int i = 0;
 
         if (n.length() < 9 || n.length() > 10 || n.charAt(0) != '0') return false;
@@ -156,7 +156,7 @@ public class Controller {
         return true;
     }
 
-    boolean ispravanJMBG(String s) {
+    private boolean ispravanJMBG(String s) {
         // Nadjedno na netu
         List<Integer> lista = new ArrayList<Integer>();
         if (cifraCheck(s)) {
@@ -178,7 +178,7 @@ public class Controller {
     }
 
 
-    boolean ispravanDatum(String s) {
+    private boolean ispravanDatum(String s) {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         format.setLenient(false);
 
@@ -276,8 +276,9 @@ public class Controller {
                     Validator validator = Validator.combine(
                             Validator.createEmptyValidator("Email adresa ne može biti prazna!"),
                             Validator.createPredicateValidator((Predicate<String>) email -> {
-                                EmailValidator emailValidator = EmailValidator.getInstance();
-                                return emailValidator.isValid(email);},
+                                        EmailValidator emailValidator = EmailValidator.getInstance();
+                                        return emailValidator.isValid(email);
+                                    },
                                     "Neispravna email adresa!")
                     );
                     validation.registerValidator(emailAdresaField, validator);
@@ -435,7 +436,10 @@ public class Controller {
                             Validator.createEmptyValidator("Datum rođenja ne može biti prazan!"),
                             Validator.createPredicateValidator((Predicate<LocalDate>) localDate -> {
                                 return ispravanDatum(localDate.toString());
-                            }, "Neispravan datum!")
+                            }, "Neispravan datum!"),
+                            Validator.createPredicateValidator((Predicate<LocalDate>) localDate -> {
+                                return validirajJmbgDatum(jmbgField.getText(), datumRodjenjaField.getValue());
+                            }, "JMBG i datum rođenja ne odgoaraju!")
                     );
                 } else {
                     // Hack sa controlsFX bitbucketa (u sustini registrira prazan validator ako komponenta nije
@@ -448,7 +452,7 @@ public class Controller {
 
         // Listener za JMBG
         jmbgField.textProperty().addListener((observableValue, s, t1) -> {
-            if (ispravanJMBG(t1)) {
+            if (ispravanJMBG(t1) && validirajJmbgDatum(t1, datumRodjenjaField.getValue())) {
                 jmbgField.getStyleClass().removeAll("poljeNijeIspravno");
                 jmbgField.getStyleClass().add("poljeIspravno");
             } else {
@@ -466,7 +470,11 @@ public class Controller {
                     Validator validator = Validator.combine(
                             Validator.createEmptyValidator("JMBG ne može biti prazan!"),
                             Validator.createPredicateValidator((Predicate<String>) s -> ispravanJMBG(s),
-                                    "Neispravan JMBG!")
+                                    "Neispravan JMBG!"),
+                            Validator.createPredicateValidator((Predicate<String>) jmbg -> {
+                                        return validirajJmbgDatum(jmbg, datumRodjenjaField.getValue());
+                                    },
+                                    "JMBG i datum rođenja ne odgoaraju!")
                     );
                     validation.registerValidator(jmbgField, validator);
                 } else {
@@ -477,12 +485,31 @@ public class Controller {
                 }
             }
         });
+    }
 
-        //potvrdiBtn
+    private boolean validirajJmbgDatum(String jmbg, LocalDate datumRodjenja) {
+        if (ispravanJMBG(jmbg) && datumRodjenja != null) {
+            int dan = Integer.parseInt(jmbg.substring(0, 2));
+            int mjesec = Integer.parseInt(jmbg.substring(2, 4));
+            String tempGodina = jmbg.substring(4, 7);
+            int godina = 0;
+
+            if (tempGodina.charAt(0) == '0') {
+                godina = Integer.parseInt(tempGodina) + 2000;
+            } else {
+                godina = Integer.parseInt(tempGodina) + 1000;
+            }
+            return (dan == datumRodjenja.getDayOfMonth() && mjesec == datumRodjenja.getMonthValue() &&
+                    godina == datumRodjenja.getYear());
+        }
+        return false;
 
     }
 
     public void potvrdiBtnAction(ActionEvent actionEvent) {
+
+        if (!validation.isInvalid()) {
+
             System.out.println("Ime i prezime: " + imeField.getText() + ' ' + prezimeField.getText() + '\n' +
                     "Broj indeksa: " + brojindeksaField.getText() + '\n' +
                     "JMBG: " + jmbgField.getText() + '\n' +
@@ -497,6 +524,7 @@ public class Controller {
                     "Status studenta: " + redovanSamofinansirajuciField.getValue() + '\n' +
                     "Poseban status studenta: " + posebnaKategorijaField.getValue() + '\n');
         }
+    }
 
 
 }
