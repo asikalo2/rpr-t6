@@ -117,7 +117,7 @@
                 <Label fx:id="emailAdresaLabel" GridPane.rowIndex="3" GridPane.columnIndex="0"
                        maxHeight="Infinity" maxWidth="Infinity" text="Email adresa:"/>
 
-                <TextField fx:id="emailAdresaField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <TextField fx:id="emailAdresaField" id="emailAdresaField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
             </children>
         </GridPane>
